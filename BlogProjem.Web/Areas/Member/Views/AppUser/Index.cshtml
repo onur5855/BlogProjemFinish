@@ -1,0 +1,107 @@
+﻿@*@model AppUser*@
+@model List<ArticleVM>
+
+
+
+
+
+@foreach (var item in Model)
+{
+    <div class="col-md-6">
+        <div class="card card-widget">
+            <div class="card-header">
+                <div class="user-block">
+                    <img class="img-circle" style="border-radius:50%;" src="@item.AppUser.ImagePath" alt="User Image">
+                    <span class="username"><a asp-controller="AppUser" asp-action="detail" asp-route-id="@item.AppUserId">@item.AppUser.FirstName @item.AppUser.LastName</a></span>
+                    <span class="description">Tarafından Paylaşıldı - @item.CreatTime.ToString("dd MMMM dddd yyyy")</span>
+                </div>
+                <!-- /.user-block -->
+                <!-- /.card-tools -->
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <img class="img-fluid pad" src="@item.ImagePath" alt="makalenni resmi">
+                <p><b>@item.Title</b></p>@*makalenin başlıgı*@
+                <p> 
+                   @for (int i = 0; i <item.Content.Split(' ','.',',').Length; i++)
+                    {
+                        @item.Content[i]
+                    }
+                </p>
+                <a asp-controller="Comment" asp-action="Create" asp-route-id="@item.ID">Devamını okumak için tıklayınız !...</a>
+                <span class="float-right text-muted">Görüntülenme @item.Views</span> <br>
+                <span class="float-right text-muted">Okunma Süresi @item.ReadingTime Dakika</span>
+            </div>
+            <!-- /.card-body -->
+            @if (item.Comments.Count > 0)
+            {
+                @foreach (var comment in item.Comments.OrderByDescending(a=>a.CreatedDate).Take(3))
+                {
+                    <div class="card-footer card-comments">
+                        <div class="card-comment">
+                            <!-- User image -->
+                            <a asp-controller="AppUser" asp-action="detail" asp-route-id="@comment.AppUserId"> <img class="img-circle img-xsm" style="border-radius:50%;" src="@comment.AppUser.ImagePath " alt="User Image"> </a>
+                            <div class="comment-text">
+                                <span class="username">
+                                    @comment.Text
+                                    <span class="text-muted float-right">@comment.CreatedDate.ToString()</span>
+                                </span><!-- /.username -->
+                                @*It is a long established fact that a reader will be distracted
+                    by the readable content of a page when looking at its layout.*@
+                            </div>
+                            <!-- /.comment-text -->
+                        </div>
+                        @*<!-- /.card-comment -->
+            <div class="card-comment">
+            <!-- User image -->
+            <img class="img-circle img-sm" src="../dist/img/user4-128x128.jpg" alt="User Image">
+
+            <div class="comment-text">
+            <span class="username">
+            Luna Stark
+            <span class="text-muted float-right">8:03 PM Today</span>
+            </span><!-- /.username -->
+            It is a long established fact that a reader will be distracted
+            by the readable content of a page when looking at its layout.
+            </div>
+            <!-- /.comment-text -->
+            </div>*@
+                        <!-- /.card-comment -->
+                    </div>
+                }
+            }
+
+            <!-- /.card-footer -->
+            @*<div class="card-footer">
+        <form action="#" method="post">
+        <img class="img-fluid img-circle img-sm" src="../dist/img/user4-128x128.jpg" alt="Alt Text">
+        <!-- .img-push is used to add margin to elements next to floating images -->
+        <div class="img-push">
+        <input type="text" class="form-control form-control-sm" placeholder="Press enter to post comment">
+        </div>
+        </form>
+        </div>*@
+            <!-- /.card-footer -->
+        </div>
+    </div>
+}
+
+
+
+
+@*@section UserInfo
+{
+
+ <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="@Model.ImagePath" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a asp-controller="AppUser" asp-action="Edit" class="d-block">@Model.FullName</a>
+                    </div>
+                </div>
+}*@
+
+@*<div class="row">
+     @await Component.InvokeAsync("Articles")
+</div>*@

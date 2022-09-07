@@ -1,0 +1,31 @@
+﻿@model DetailCategoryDTO
+
+
+ <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Makale Detayı</h3>
+                               
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      
+                      <th>@Model.Name</th>
+                      <th>@Model.Description</th>
+                     
+                    </tr>
+
+                  </thead>
+
+                </table>
+              </div>
+              <!-- /.card-body -->
+     <div class="card-footer">
+        <a asp-action="List" class="btn btn-outline-success">Back To List</a>
+
+
+        <a asp-action="Update" class="btn btn-outline-success">Update</a>
+    </div>
+  </div>        

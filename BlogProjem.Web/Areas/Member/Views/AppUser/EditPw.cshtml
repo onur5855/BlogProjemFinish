@@ -1,0 +1,43 @@
+﻿@model EditPwDTO
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Kullanıcı Şifre güncelleme Paneli</h3>
+    </div>
+    <form asp-action="EditPw" method="post">
+
+        <input asp-for="PW" type="hidden" />
+        <input asp-for="Id" type="hidden" />
+        <input asp-for="identityId" type="hidden" />
+
+        <div class="form-group">
+
+            <label asp-for="PW">Current Password</label>
+            <img id="btnShow" src="~/eye-slash-fill.svg" />
+            <input asp-for="PW" class="form-control" type="password" />
+            <span asp-validation-for="PW" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NewPassword">New Password</label>
+            <img id="NewbtnShow" src="~/eye-slash-fill.svg" />
+            <input asp-for="NewPassword" class="form-control" type="password" />
+            <span asp-validation-for="NewPassword" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ConfirumNewPassword">Confirum New Password</label>
+            <img id="ConfirumNewbtnShow" src="~/eye-slash-fill.svg" />
+            <input asp-for="ConfirumNewPassword" class="form-control" type="password" />
+            <span asp-validation-for="ConfirumNewPassword" class="text-danger"></span>
+        </div>
+
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+    </form>
+
+
+
+
+</div>

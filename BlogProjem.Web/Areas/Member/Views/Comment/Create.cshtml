@@ -1,0 +1,116 @@
+﻿@model CommentArticleVm
+
+<form asp-action="Create" method="post">
+    <input asp-for="ArticleId" type="hidden" />
+    <div class="card">
+        <div class="card card-widget">
+            <div class="card-header">
+                <!-- userın bilgilari baslıgı -->
+                <div class="user-block">
+                    <img class="img-circle" style="border-radius:50%;" src="@Model.AppUser.ImagePath" alt="User Image">
+                    <span class="username"><a asp-controller="AppUser" asp-action="detail" asp-route-id="@Model.AppUserId">@Model.AppUser.FirstName @Model.AppUser.LastName</a></span>
+                    <span class="description">Tarafından Paylaşıldı - @Model.CreatedDate.ToString("dd MMMM dddd yyyy")</span>
+                </div>
+                <br />
+                <!--makalenin bilgileri-->
+                <div class="card-body">
+                    <img class="img-fluid pad" src="@Model.ImagePath" alt="makalenni resmi">
+                    <p><b>@Model.Title</b></p>
+                    <p>
+                        @Model.Content
+                    </p>
+                    @if (Model.Likes.Any<Like>(a => a.ArticleId == Model.ArticleId && a.AppUserId == Model.IdentitId))
+                    {
+                        <a asp-action="DisLike" asp-route-id="@Model.ArticleId"><button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-down"></i> Like @Model.Likes.Count</button></a>
+                    }
+                    else
+                    {
+                        <a asp-action="Like" asp-route-id="@Model.ArticleId"><button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like @Model.Likes.Count</button></a>
+
+                    }
+
+                    @* <span class="float-right text-muted">@item.Likes.Count() - @item.Comments.Count()</span>*@
+                    <span class="float-right text-muted">Görüntülenme @Model.views</span> <br>
+                </div>
+
+                @foreach (var comment in Model.Comments.OrderByDescending(a => a.CreatedDate))
+                {
+                    @if (comment.AppUserId == Model.IdentitId)
+                    {
+                        <div class="card-footer card-comments">
+                            <div class="card-comment">
+                                <!-- User image -->
+                                <a asp-controller="AppUser" asp-action="detail" asp-route-id="@comment.AppUserId"> <img class="img-circle img-xsm" style="border-radius:50%;" src="@comment.AppUser.ImagePath " alt="User Image"> </a>
+                                <div class="comment-text">
+                                    <span class="username">
+                                        @comment.Text
+                                       <a href="#"><span class="text-muted form-floating" > <i class="fas fa-pen-nib" data-bs-toggle="modal" data-bs-target="#staticBackdrop-@(comment.ID)"></i></span></a> 
+                                        <a  asp-action="Delete" asp-route-id="@comment.ID" asp-route-id2="@Model.ArticleId" ><span class="text-muted form-floating float-right"> <i class="fas fa-trash-alt"></i></span></a>
+                                        <span class="text-muted form-floating float-right">@comment.CreatedDate.ToString()</span>
+                                    </span>
+
+                                    @using (Html.BeginForm())
+                                    {
+                                        <div class="modal fade" id="staticBackdrop-@(comment.ID)" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Yorum Duzenle</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form asp-action="Edit" method="post">
+                                                        <div class="modal-body">
+                                                            @Html.TextArea("yorum", @comment.Text,new { @class = "form-control"  } )
+                                                            @*<textarea asp-for="@comment.Text" class="form-control" aria-label="With textarea" style="height:200px;"> </textarea>*@
+                                                        </div>
+                                                    </form>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                                        <button asp-action="Edit" asp-route-id="@comment.ID" asp-route-id2="@Model.ArticleId" type="submit" class="btn btn-primary">Kaydet</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--modall baslangıc-->
+                        <!-- Button trigger modal -->
+                        <!-- Modal -->
+                        <!--modal bitiş-->
+                    }
+                    else
+                    {
+                        <div class="card-footer card-comments">
+                            <div class="card-comment">
+                                <!-- User image -->
+                                <a asp-controller="AppUser" asp-action="detail" asp-route-id="@comment.AppUserId"> <img class="img-circle img-xsm" style="border-radius:50%;" src="@comment.AppUser.ImagePath " alt="User Image"> </a>
+                                <div class="comment-text">
+                                    <span class="username">
+                                        @comment.Text
+                                        <span class="text-muted float-right">@comment.CreatedDate.ToString()</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <div class="form-group ">
+                    <textarea asp-for="Text" class="form-control" aria-label="With textarea" style="height:200px;"> </textarea>
+                    <span asp-validation-for="Text" class="text-danger"></span>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Yorum Yap</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

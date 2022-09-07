@@ -1,0 +1,77 @@
+﻿@model List<GetArticleVm>
+
+    <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Makale Listesi</h3>
+
+                <div class="card-tools">
+                  <ul class="pagination pagination-sm float-right">
+                    <li class="page-item"><a class="page-link" href="#">«</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">»</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      
+                      <th>Başlık</th>
+                      <th>Content Açıklama</th>
+                      <th>Photo</th>
+                      <th>CatagoryName</th>
+                      <th>UserFullName</th>
+                      
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+                      @foreach (var item in Model)
+                     {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.Content.Substring(0,1)</td>
+                            <td>                                 
+                                <img src="@item.ImagePath" />
+                            </td>
+                            <td>@for (int i = 0; i < item.CategoryName.Count; i++)
+                            {
+                                @item.CategoryName[i]<br />
+                            }</td>
+                            
+                            <td>@item.UserFullName</td>
+
+                            <td>
+                                <a asp-action="Update" asp-route-id="@item.ArticleID"> 
+                                    Güncelle                                     
+                                </a>
+                            </td>
+
+                            <td>
+                                <a asp-action="Delete" asp-route-id="@item.ArticleID">
+                                    Sil
+                                </a>
+                                
+                            </td>
+
+                            <td>
+                                <a asp-action="Detail" asp-route-id="@item.ArticleID" class="btn btn-warning">
+                                    Detay
+                                </a>
+                            </td>
+                            
+                        </tr>
+                     }
+
+                  
+                  
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>

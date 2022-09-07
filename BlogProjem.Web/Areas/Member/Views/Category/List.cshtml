@@ -1,0 +1,85 @@
+﻿
+@model List<UserFollowCategoryVM>
+<div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Kategori Listesi</h3>
+
+                <div class="card-tools">
+                  <ul class="pagination pagination-sm float-right">
+                    <li class="page-item"><a class="page-link" href="#">«</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">»</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      
+                      <th>Kategori Ad</th>
+                      <th>Kategori Açıklama</th>
+                      
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+                      @foreach (var item in Model)
+                     {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>
+                            <td>
+                                <a asp-action="Update" asp-route-id="@item.ID"> 
+                                    Güncelle                                     
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-action="Delete" asp-route-id="@item.ID">
+                                    Sil
+                                </a>
+                                
+                            </td>
+                            <td>
+                                <a asp-action="Detail" asp-route-id="@item.ID" class="btn btn-warning">
+                                    Detay
+                                </a>
+                            </td>
+                            <td>
+                                @if (item.UserFollowCategories.Count>0)
+                            {
+                                  <a asp-action="UnFollow" asp-route-id="@item.ID" class="btn btn-info">
+                                    Takip Bırak
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="Follow" asp-route-id="@item.ID" class="btn btn-info">
+                                    Takip Et
+                                </a>
+                                
+                            }
+
+                                
+                               
+                           
+                                
+                               
+                            
+
+
+                            </td>
+                        </tr>
+                     }
+
+                  
+                  
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>

@@ -1,0 +1,53 @@
+﻿@model CreateUserDTO
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Kullanıcı Kayıt Paneli</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form asp-action="Create" method="post" enctype="multipart/form-data" >
+        <div class="card-body">
+            <div class="form-group">
+                <label asp-for="FirstName">FirstName</label>
+                <input asp-for="FirstName" class="form-control" type="text" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName">LastName</label>
+                <input asp-for="LastName" class="form-control" type="text" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName">UserName</label>
+                <input asp-for="UserName" class="form-control" type="text" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mail">Mail</label>
+                <input asp-for="Mail" class="form-control" type="email" />
+                <span asp-validation-for="Mail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image">Image</label>
+                <input asp-for="Image" class="form-control" type="file" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+        </div>
+    </form>
+</div>
+
+<!-- kayıt olma paneli burada bitiyor-->
+
+

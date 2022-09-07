@@ -1,0 +1,77 @@
+﻿@model CreateArticleVM
+<script src="~/jquery/jquery.min.js" ></script>
+<script src="~/jquery-validate/jquery.validate.min.js" ></script>
+<script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" ></script>
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Makale Oluşturma Paneli</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form asp-action="Create" method="post" enctype="multipart/form-data" >
+        <div class="card-body">
+            <div class="form-group">
+                <label asp-for="Title">Title</label>
+                <input asp-for="Title" class="form-control" type="text" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group ">
+                <label asp-for="Content">Content</label>
+                @*<input asp-for="Content"   class="form-control" type="text"   />*@
+                <textarea asp-for="Content" class="form-control" aria-label="With textarea" style="height:200px;" > </textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+
+              <div class="form-group">
+                <label asp-for="Image">Image</label>
+                <input asp-for="Image" class="form-control" type="file" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div>
+                <input asp-for="AppUserID" type="hidden" />
+            </div>
+
+            @*  <div>
+                  <label asp-for="CategoryID">category</label>
+                     <select asp-for="CategoryID">
+                           @foreach (var item in Model.selectCategoryDTOs)
+                           {   
+                               <input asp-for="selectCategoryDTOs" type="checkbox"/>
+                              <option value="@item.ID"> @item.Name</option>
+                           }
+                            
+                     </select>
+                 <span asp-validation-for="CategoryID" class="text-danger"></span>
+            </div>*@
+            
+                <div class="col-md-10">
+                @for (int i = 0; i < Model.GetCategories.Count; i++)
+                {
+                    <div class="col-md-2">
+                        @Html.CheckBoxFor(Model=>Model.GetCategories[i].IsSelected)
+                        <label> @Model.GetCategories[i].Name </label>
+                        @Html.HiddenFor(Model=>Model.GetCategories[i].ID)
+                        @Html.HiddenFor(Model=>Model.GetCategories[i].Name)
+                    </div>    
+                   
+                    
+                }
+                 
+                <span asp-validation-for="GetCategories" class="text-danger"></span>
+            </div>
+            
+             
+                           
+
+
+
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Oluştur</button>
+        </div>
+    </form>
+</div>

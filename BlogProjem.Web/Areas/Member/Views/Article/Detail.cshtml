@@ -1,0 +1,127 @@
+﻿
+@model List<GetArticleVm>
+
+
+     <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Makale Detayı</h3>
+                               
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      
+                      <th>Başlık</th>
+                      <th>Content Açıklama</th>
+                      <th>Photo</th>
+                      <th>CatagoryName</th>
+                      <th>UserFullName</th>
+                      
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+                      @foreach (var item in Model)
+                     {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.Content.Substring(0,1)</td>
+                            <td>                                 
+                                <img src="@item.ImagePath" />
+                            </td>
+                            <td>@for (int i = 0; i < item.CategoryName.Count; i++)
+                            {
+                                @item.CategoryName[i]
+                            }</td>
+                            
+                            <td>@item.UserFullName</td>
+
+                           @* <td>
+                                <a asp-action="Update" asp-route-id="@item.ArticleID"> 
+                                    Güncelle                                     
+                                </a>
+                            </td>*@
+
+                           @* <td>
+                                <a asp-action="Delete" asp-route-id="@item.ArticleID">
+                                    Sil
+                                </a>
+                                
+                            </td>*@
+
+                          @*  <td>
+                                <a asp-action="Detail" asp-route-id="@item.ArticleID" class="btn btn-warning">
+                                    Detay
+                                </a>
+                            </td>*@
+                            
+                        </tr>
+                     }
+
+                  
+                  
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+               <div class="card-footer">
+        <a asp-action="List" class="btn btn-outline-success">Back To List</a>
+
+
+        <a asp-action="Update" class="btn btn-outline-success">Update</a>
+    </div>
+            </div>
+
+
+
+@*<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Detail Page</font></font></h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form class="form-horizontal">
+        @foreach (var item in Model)
+        {
+
+        <div class="card-body">
+            <div class="form-group row">
+
+                <label for="inputEmail3" class="col-sm-10 col-form-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@item.Title</font></font> </label>
+
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-10 col-form-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@item.Content</font></font></label>
+
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-10 col-form-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@item.UserFullName</font></font></label>
+
+            </div>
+            <div class="form-group row">
+                @for (int i = 0; i < item.CategoryName.Count; i++)
+                {
+                    <label class="col-sm-10 col-form-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@item.CategoryName[i]</font></font></label>
+                }
+
+
+            </div>
+        </div>
+
+        }
+
+
+
+        <!-- /.card-body -->
+        <!-- /.card-footer -->
+    </form>
+    <div class="card-footer">
+        <a asp-action="List" class="btn btn-outline-success">Back To List</a>
+
+
+        <a asp-action="Update" class="btn btn-outline-success">Update</a>
+    </div>
+*@
