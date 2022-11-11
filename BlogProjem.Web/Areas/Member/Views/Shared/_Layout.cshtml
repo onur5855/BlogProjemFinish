@@ -32,7 +32,11 @@
     <link rel="stylesheet" href="~/temp/plugins/daterangepicker/daterangepicker.css" />
     <!-- summernote -->
     <link rel="stylesheet" href="~/temp/plugins/summernote/summernote-bs4.min.css" />
-
+    <!--validasyon jsleri-->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <!--/ validasyon jsleri-->
     <script src="https://kit.fontawesome.com/9cc05da95e.js" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js" crossorigin="anonymous"></script>
 
@@ -50,14 +54,29 @@
                     <a asp-controller="AppUser" asp-action="Index" class="nav-link">Anasayfa</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Hakkımızda</a>
+                    <a asp-controller="AppUser" asp-action="Abaut"  class="nav-link">Hakkımızda</a>
                 </li>
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+
+                  <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Kategori
+                </a>
+                <div class="dropdown-menu">
+                    @await Component.InvokeAsync("CategoryArticleComponent")
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-controller="AppUser" asp-action="FollowCategory">Takip Ettiğim Kategoriler</a>
+                </div>
+            </li>
+
+
+
+
                 <!-- Navbar Search -->
-                <li class="nav-item">
+               @* <li class="nav-item">
                     <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                         <i class="fas fa-search"></i>
                     </a>
@@ -76,7 +95,7 @@
                             </div>
                         </form>
                     </div>
-                </li>
+                </li>*@
             </ul>
         </nav>
 
@@ -200,14 +219,14 @@
 
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link" >
+                                    <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>
                                             Edit
                                             <i class="fas fa-angle-left right"></i>
                                         </p>
                                     </a>
-                                    
+
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
                                             <a asp-controller="AppUser" asp-action="EditPw" class="nav-link">
@@ -224,7 +243,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                      <ul class="nav nav-treeview">
+                                    <ul class="nav nav-treeview">
                                         <li class="nav-item">
                                             <a asp-controller="AppUser" asp-action="EditEmail" class="nav-link">
                                                 <i class="fas fa-wrench nav-icon"></i>
@@ -232,7 +251,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                      <ul class="nav nav-treeview">
+                                    <ul class="nav nav-treeview">
                                         <li class="nav-item">
                                             <a asp-controller="AppUser" asp-action="EditUser" class="nav-link">
                                                 <i class="fas fa-wrench nav-icon"></i>
@@ -307,6 +326,32 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="~/temp/dist/dashboard3.js"></script>
     <script src="~/js/site.js"></script>
-    
+    <script>
+        
+function pw() {
+  var x = document.getElementById("pwshow");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+};
+function newpw() {
+  var x = document.getElementById("newpwshow");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+};
+function confirumnewpw() {
+  var x = document.getElementById("confirumnewpwshow");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+    </script>
 </body>
 </html>

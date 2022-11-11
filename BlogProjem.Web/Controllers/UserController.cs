@@ -56,8 +56,8 @@ namespace BlogProjem.Web.Controllers
                             var user = mapper.Map<AppUser>(dto);
                             user.IdentityId = newId;  // identity kişisi ile appUser kişisini bağladık.
 
-                            using var image = Image.Load(dto.Image.OpenReadStream()); // dosyayı oku al
-                            image.Mutate(a => a.Resize(80, 80));   // mutate: değiştirmek , foto yeniden şekilediriliyor.
+                            using var image = Image.Load(dto.Image.OpenReadStream()); // dosyayı oku al 
+                            image.Mutate(a => a.Resize(80,80));  // mutate: değiştirmek , foto yeniden şekilediriliyor.
                             image.Save($"wwwroot/images/{user.IdentityId}.jpg");  // dosyayı images altına kaydet
                             user.ImagePath = $"/images/{user.IdentityId}.jpg"; // ama biz kaydettiğimiz yolu veritabanında tutuyoruz.
 
@@ -77,6 +77,22 @@ namespace BlogProjem.Web.Controllers
             return View(dto);
         }
 
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            AppUser appUser = appUserRepository.GetDefault(a => a.ID == id);
+            IdentityUser identityUser = await userManager.FindByIdAsync(appUser.IdentityId);
+            var UserProfil = appUserRepository.GetByDefault(selector: a => new UserDto()
+            {
+                FirstName = a.FirstName,
+                LastName = a.LastName,
+                ImagePath = a.ImagePath,
+                UserName = a.UserName,
+                Email = identityUser.Email,
+            }, expression: a => a.IdentityId == identityUser.Id);
+
+            return View(UserProfil);
+        }
 
 
 

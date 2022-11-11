@@ -6,7 +6,24 @@ const { Modal } = require("../lib/bootstrap/dist/js/bootstrap.bundle");
 
 
 
-// Write your JavaScript code.
+ Write your JavaScript code.
+
+    function show() {
+        var x = document.getElementById("pw");
+        if (x.type == "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+};
+function myFunction() {
+    var x = document.getElementById("myInput");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
 //$(document).ready(function () {
 //    $("#editwrench").click(function () {
 //        $("#firstname").removeAttr("readonly")

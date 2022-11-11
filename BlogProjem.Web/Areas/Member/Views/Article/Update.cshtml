@@ -20,7 +20,8 @@
 
             <div class="form-group">
                 <label asp-for="Content">content</label>
-                <input asp-for="Content" class="form-control" type="text" />
+             @*   <input asp-for="Content" class="form-control" type="text" />*@
+                <textarea  asp-for="Content" class="form-control" type="text" style="height:200px;" > </textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
 

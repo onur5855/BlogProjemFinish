@@ -5,7 +5,7 @@
     </div>
     <form asp-action="EditUser" method="post" enctype="multipart/form-data">
        <input asp-for="ID" type="hidden" />
-       <input asp-for="UserName" type="hidden" />
+       @*<input asp-for="UserName" type="hidden" />*@
        <input asp-for="ImagePath" type="hidden" />
         <div class="form-group">
             <label asp-for="FirstName">FirstName</label>

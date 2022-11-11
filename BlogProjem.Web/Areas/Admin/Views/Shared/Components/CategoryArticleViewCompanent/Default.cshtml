@@ -1,0 +1,9 @@
+﻿@model List<GetCategoryDto>
+<div class="list-group">
+
+    @foreach (var item in Model)
+    {
+        <a class="dropdown-item " asp-controller="AppUser" asp-action="GetArticleIndex" asp-route-id="@item.ID">@item.Name</a>
+    }
+
+</div>

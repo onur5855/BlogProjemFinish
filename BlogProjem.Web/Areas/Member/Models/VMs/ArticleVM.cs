@@ -9,8 +9,6 @@ namespace BlogProjem.Web.Areas.Member.Models.VMs
         public DateTime CreatTime{ get; set; }
 
         public string Content { get; set; }
-        public string[] OnizlemeContent { get; set; }
-        public List<string> OnizlemeContent2 { get; set; }
 
         public string ImagePath { get; set; }  // dosya yolunu tutacak
         public int AppUserId { get; set; }

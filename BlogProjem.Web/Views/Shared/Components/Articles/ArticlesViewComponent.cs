@@ -30,7 +30,7 @@ namespace BlogProjem.Web.Views.Shared.Components.Articles
                     Image=a.ImagePath,
                     CreatedDate=a.CreatedDate,
                     Like=a.Likes,
-                    Comments=a.Comments.OrderByDescending(a=>a.CreatedDate).Take(3).ToList()
+                    Comments=a.Comments.OrderByDescending(a=>a.CreatedDate).ToList()
                     //CategoryName=a.Category.Name
                 },
                 expression:a=>a.Statu!=Model.Enums.Statu.Passive,

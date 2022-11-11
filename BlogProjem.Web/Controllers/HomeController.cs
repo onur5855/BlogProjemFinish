@@ -50,13 +50,16 @@ namespace BlogProjem.Web.Controllers
                         {
                             string role = (await userManager.GetRolesAsync(identityUser)).FirstOrDefault();
                             return RedirectToAction("Index", "AppUser", new { area = role });  // localHost/member/appuser/index - KAYITLI KULLANICI ANASAYFASI
-                        }
-                        
+                        }                                                 
+                            ModelState.AddModelError("Password", "Hesabınızın onaylanmasını bekleyin");
+                            return View(dto);                                                
                     }
 
                 }
             }
+            ModelState.AddModelError("Password", "Email veya şifre yanlış");
             return View(dto);
+            
         }
 
 

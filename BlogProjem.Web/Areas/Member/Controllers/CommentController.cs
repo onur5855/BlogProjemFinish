@@ -72,23 +72,32 @@ namespace BlogProjem.Web.Areas.Member.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CommentArticleVm vm)
         {
-            IdentityUser identityUser = await userManager.GetUserAsync(User);
-            AppUser appUser = appUserRepository.GetDefault(a => a.IdentityId == identityUser.Id);
+            if (!string.IsNullOrEmpty(vm.Text) || !string.IsNullOrWhiteSpace(vm.Text))
+            {
+                IdentityUser identityUser = await userManager.GetUserAsync(User);
+                AppUser appUser = appUserRepository.GetDefault(a => a.IdentityId == identityUser.Id);
 
 
-            var comment = new Comment { AppUserId = appUser.ID, ArticleId = vm.ArticleId, Text = vm.Text, Statu = Model.Enums.Statu.Active };
-            commentRepository.Create(comment);
+                var comment = new Comment { AppUserId = appUser.ID, ArticleId = vm.ArticleId, Text = vm.Text, Statu = Model.Enums.Statu.Active };
+                commentRepository.Create(comment);
+                return RedirectToAction("Create");
+            }
             return RedirectToAction("Create");
+
         }
         //[Route("Edit/{vm}/{id}")]
         [HttpPost]
         public IActionResult Edit(string yorum,int id,int id2)
         {
+            if (!string.IsNullOrEmpty(yorum) || !string.IsNullOrWhiteSpace(yorum))
+            {
             var comment=commentRepository.GetDefault(a => a.ID == id);
             comment.Text=yorum;
             commentRepository.Update(comment);
             return RedirectToAction("Create", new { id = id2 });
-          
+            }
+            return RedirectToAction("Create" ,new {id =id2} );
+
         }
         [Route("Delete/{id}/{id2}")]
         public IActionResult Delete(int id,int id2)

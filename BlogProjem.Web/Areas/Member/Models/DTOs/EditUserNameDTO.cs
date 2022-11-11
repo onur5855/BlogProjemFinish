@@ -7,8 +7,7 @@ namespace BlogProjem.Web.Areas.Member.Models.DTOs
         public string IdentityID { get; set; }
 
         [Required(ErrorMessage = "bu alan boş olamaz")]
-        [MinLength(3,ErrorMessage ="minumum 3 karekter olmalıdır")]
-        [MaxLength(30,ErrorMessage ="en fazla 30 karekter olabilir")]        
+        [MinLength(6, ErrorMessage = "6 karekterden az olamaz"), MaxLength(25, ErrorMessage = "25 karekteri gecemez")]
         public string UserName { get; set; }
 
     }

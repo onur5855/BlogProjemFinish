@@ -1,0 +1,33 @@
+﻿@model ArticleDto
+
+<form asp-action="Active" method="post">
+    <input asp-for="ID" type="hidden" />
+    <div class="card">
+        <div class="card card-widget">
+            <div class="card-header">
+                <!-- userın bilgilari baslıgı -->
+                <div class="user-block">
+                    <img class="img-circle" style="border-radius:50%;" src="@Model.AppUser.ImagePath" alt="User Image">
+                    <span class="username"><a asp-controller="AppUser" asp-action="UserDetail" asp-route-id="@Model.AppUserId">@Model.AppUser.FirstName @Model.AppUser.LastName</a></span>
+                    <span class="description">Tarafından Paylaşıldı - @Model.CreatTime.ToString("dd MMMM dddd yyyy")</span>
+                </div>
+                <br />
+                <!--makalenin bilgileri-->
+                <div class="card-body">
+                    <img class="img-fluid pad" src="@Model.ImagePath" alt="makalenni resmi">
+                    <p><b>@Model.Title</b></p>
+                    <p>
+                        @Model.Content
+                    </p>
+                </div>
+                @foreach (var item in Model.ArticleCategories)
+                {
+                    <div class="col-md-2">
+                        <label> @item.Category.Name </label>
+                    </div>
+                }
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit"  > Aktif Et </button>
+    </div>
+</form>

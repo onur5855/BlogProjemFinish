@@ -16,12 +16,15 @@
             <tr>
                 <td class="text-bold text-black">@Model.FirstName</td>
                 <td class="text-bold text-black">@Model.LastName</td>
-                <td> <img src="@Model.ImagePath"/> </td>
+                <td> <img  src="@Model.ImagePath"/> </td>
                 <td class="text-bold text-black">@Model.Email</td>
                 <td class="text-bold text-black">@Model.UserName</td>
             </tr>
         </tbody>
     </table>
+    <div>
+        <a asp-action="Delete"> <button class="btn btn-primary" >Hesabı Dondur </button>  </a>   
+    </div>
 </div>
 
 

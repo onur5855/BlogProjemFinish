@@ -1,0 +1,24 @@
+﻿@model GetUserDto 
+
+<div class="card-body p-0">
+    <table class="table">
+        <thead>
+           <tr>                      
+             <th>ADINIZ</th>
+             <th>SOYADINIZ</th>
+             <th>Profil Resmi</th>
+             <th>Email</th>
+             <th>Kullanıcı Adınız</th>                      
+           </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-bold text-black">@Model.FirstName</td>
+                <td class="text-bold text-black">@Model.LastName</td>
+                <td> <img src="@Model.ImagePath"/> </td>
+                <td class="text-bold text-black">@Model.Email</td>
+                <td class="text-bold text-black">@Model.UserName</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

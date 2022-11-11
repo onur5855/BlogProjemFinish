@@ -10,24 +10,25 @@
         <input asp-for="identityId" type="hidden" />
 
         <div class="form-group">
-
+            
             <label asp-for="PW">Current Password</label>
-            <img id="btnShow" src="~/eye-slash-fill.svg" />
-            <input asp-for="PW" class="form-control" type="password" />
+             <img  src="~/eye-slash-fill.svg" onclick="pw()"/> 
+            <input asp-for="PW" id="pwshow"   class="form-control" type="password" />
             <span asp-validation-for="PW" class="text-danger"></span>
+            
         </div>
 
         <div class="form-group">
             <label asp-for="NewPassword">New Password</label>
-            <img id="NewbtnShow" src="~/eye-slash-fill.svg" />
-            <input asp-for="NewPassword" class="form-control" type="password" />
+            <img  onclick="newpw()" src="~/eye-slash-fill.svg" />
+            <input asp-for="NewPassword" id="newpwshow" class="form-control" type="password" />
             <span asp-validation-for="NewPassword" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="ConfirumNewPassword">Confirum New Password</label>
-            <img id="ConfirumNewbtnShow" src="~/eye-slash-fill.svg" />
-            <input asp-for="ConfirumNewPassword" class="form-control" type="password" />
+            <img  onclick="confirumnewpw()" src="~/eye-slash-fill.svg" />
+            <input asp-for="ConfirumNewPassword" id="confirumnewpwshow" class="form-control" type="password" />
             <span asp-validation-for="ConfirumNewPassword" class="text-danger"></span>
         </div>
 

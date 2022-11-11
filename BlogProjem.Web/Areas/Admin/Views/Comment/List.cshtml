@@ -1,0 +1,55 @@
+﻿@model CommentArticleVm
+
+
+    <div class="card">
+        <div class="card card-widget">
+            <div class="card-header">
+                <!-- userın bilgilari baslıgı -->
+                <div class="user-block">
+                    <img class="img-circle" style="border-radius:50%;" src="@Model.AppUser.ImagePath" alt="User Image">
+                    <span class="username"><a asp-controller="AppUser" asp-action="UserDetail" asp-route-id="@Model.AppUserId">@Model.AppUser.FirstName @Model.AppUser.LastName</a></span>
+                    <span class="description">Tarafından Paylaşıldı - @Model.CreatedDate.ToString("dd MMMM dddd yyyy")</span>
+                </div>
+                <br />
+                <!--makalenin bilgileri-->
+                <div class="card-body">
+                    <img class="img-fluid pad" src="@Model.ImagePath" alt="makalenni resmi">
+                    <p><b>@Model.Title</b></p>
+                    <p>
+                        @Model.Content
+                    </p>
+            <button class="btn btn-default btn-sm" type="button" style="cursor:default"><i class="far fa-thumbs-up"></i> Like @Model.Likes.Count </button>   
+                                  
+
+                    @* <span class="float-right text-muted">@item.Likes.Count() - @item.Comments.Count()</span>*@
+                    <span class="float-right text-muted">Görüntülenme @Model.views</span> <br>
+                </div>
+
+                @foreach (var comment in Model.Comments.OrderByDescending(a => a.CreatedDate))
+                {
+                    
+                        <div class="card-footer card-comments">
+                            <div class="card-comment">
+                                <!-- User image -->
+                                @*kayıtsız kullanıcı ıçın user linke verip action yazıcaz*@
+                                <a asp-controller="AppUser" asp-action="UserDetail" asp-route-id="@comment.AppUserId" style="text-decoration:none;">
+                                    <img class="img-circle img-xsm" style="border-radius:50%; " src="@comment.AppUser.ImagePath" alt="User Image">
+                                          @comment.AppUser.FullName                                                               
+                                 </a>
+
+                                <div class="comment-text" style="margin-top:10px;">
+                                    <span class="username" >
+                                        @comment.Text
+                                        <span class="text-muted float-end">@comment.CreatedDate.ToString()</span>
+                                        <a  class="btn btn-primary float-end" asp-action="Passive"  asp-route-id="@comment.ID" asp-route-id2="@Model.ArticleId">Sil</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                }
+
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" asp-controller="Article" asp-action="Delete" asp-route-id="@Model.ArticleId" >Makaleyi sil</a>

@@ -60,7 +60,8 @@ app.UseAuthorization();  // yetkilendirme
 
 app.MapControllerRoute(
                     name: "area",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    );
 
 //app.UseEndpoints(endpoints =>
 //{

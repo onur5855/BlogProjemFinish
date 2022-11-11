@@ -44,7 +44,7 @@
                                 <div class="comment-text">
                                     <span class="username">
                                         @comment.Text
-                                       <a href="#"><span class="text-muted form-floating" > <i class="fas fa-pen-nib" data-bs-toggle="modal" data-bs-target="#staticBackdrop-@(comment.ID)"></i></span></a> 
+                                       <a ><span class="text-muted form-floating" > <i class="fas fa-pen-nib" data-bs-toggle="modal" data-bs-target="#staticBackdrop-@(comment.ID)"></i></span></a> 
                                         <a  asp-action="Delete" asp-route-id="@comment.ID" asp-route-id2="@Model.ArticleId" ><span class="text-muted form-floating float-right"> <i class="fas fa-trash-alt"></i></span></a>
                                         <span class="text-muted form-floating float-right">@comment.CreatedDate.ToString()</span>
                                     </span>
@@ -61,12 +61,16 @@
                                                     <form asp-action="Edit" method="post">
                                                         <div class="modal-body">
                                                             @Html.TextArea("yorum", @comment.Text,new { @class = "form-control"  } )
+                                                            
+                                                          @*  @Html.ValidationMessageFor(m => m.Text, "", new { @class = "error" })*@
+                                                             @*<input asp-for="ArticleId" type="hidden" />*@
                                                             @*<textarea asp-for="@comment.Text" class="form-control" aria-label="With textarea" style="height:200px;"> </textarea>*@
                                                         </div>
                                                     </form>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
                                                         <button asp-action="Edit" asp-route-id="@comment.ID" asp-route-id2="@Model.ArticleId" type="submit" class="btn btn-primary">Kaydet</button>
+                                                       
                                                     </div>
                                                 </div>
                                             </div>

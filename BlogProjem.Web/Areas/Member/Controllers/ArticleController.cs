@@ -136,7 +136,7 @@ namespace BlogProjem.Web.Areas.Member.Controllers
         {
             
             //listede aktif article var detaya aktiflerden ulaşıcak            
-            var articleList = articleRepository.GetByDefaults
+            var articleList = articleRepository.GetByDefault
                 (
                     selector: a => new GetArticleVm()
                     {
@@ -150,7 +150,7 @@ namespace BlogProjem.Web.Areas.Member.Controllers
                     },
                     expression: a => a.ID == id,
 
-                include: a => a.Include(a => a.AppUser).Include(a => a.ArticleCategories)
+                include: a => a.Include(a => a.AppUser).Include(a => a.ArticleCategories).ThenInclude(a=>a.Category)
                 );
             return View(articleList);
         }

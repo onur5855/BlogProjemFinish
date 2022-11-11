@@ -42,6 +42,7 @@ namespace BlogProjem.Web.Areas.Member.Controllers
         //TODO: kayıtlı kullanıcı anasayfası takip ettiği kategori varsa o kategoriye ait makalelerin listelenmesini isteriz. yoksa en güncel 10 makale
         //listelensin isteriz
         // makalerde yorum varsa onlar gözükmeli like bilgileri gözükmeli 
+        
         public async Task<IActionResult> Index()
         {
             //identity user kişisi
@@ -50,7 +51,7 @@ namespace BlogProjem.Web.Areas.Member.Controllers
             if (appUser!= null)
             {
                 var aaa = userFollowCategoryRepository.GetDefaults(a => a.AppUserId == appUser.ID);
-
+               
                 var article = articleRepository.GetByDefaults
                     (
                     selector: a => new ArticleVM
@@ -80,7 +81,33 @@ namespace BlogProjem.Web.Areas.Member.Controllers
             return Redirect("~/");//areasız başlangıç sayfasına yani home-index
 
         }
-    
+        //[Route("Member/AppUser/Index/{id:int}")]
+        public IActionResult GetArticleIndex(int id)
+        {
+
+          
+                var articlee = articleRepository.GetByDefaults
+                   (selector: a => new ArticleVM()
+                   {
+                       ID = a.ID,
+                       AppUser = a.AppUser,
+                       AppUserId = a.AppUserId,
+                       Comments = a.Comments.Where(a => a.Statu != Model.Enums.Statu.Passive).ToList(),
+                       Content = a.Content,
+                       CreatTime = a.CreatedDate,
+                       ImagePath = a.ImagePath,
+                       Likes = a.Likes,
+                       Title = a.Title,
+                       Views = a.views,
+                       ReadingTime = a.Content.Length / 200,
+                   },
+                   expression: a => a.ArticleCategories.Any(a => a.CategoryId == id),
+                   include: a => a.Include(a => a.AppUser).Include(a => a.Comments).ThenInclude(a => a.AppUser).Include(a => a.ArticleCategories).ThenInclude(a => a.Category)
+                   );
+                return View(articlee);
+        }
+
+
 
         public async Task<IActionResult> LogOut()
         {
@@ -121,13 +148,15 @@ namespace BlogProjem.Web.Areas.Member.Controllers
         {
             IdentityUser identityUser = await userManager.GetUserAsync(User);
             AppUser appUser = appUserRepository.GetDefault(a => a.IdentityId == identityUser.Id);
-            var userpw = appUserRepository.GetByDefault(selector: a=> new EditPwDTO()
+
+            var userpw = appUserRepository.GetByDefault(selector: a => new EditPwDTO()
             {
-                Id=a.ID,
-                identityId=a.IdentityId,
-                PW=a.Password,//pw silinebilir kullanıcı giricek kukiden alıp kontrol edebiliriz gerek yok
-            },expression:a=>a.IdentityId==identityUser.Id
+                Id = a.ID,
+                identityId = a.IdentityId,
+                PW = a.Password,//pw silinebilir kullanıcı giricek kukiden alıp kontrol edebiliriz gerek yok
+            }, expression: a => a.IdentityId == identityUser.Id
             );
+
             return View(userpw);
 
         }
@@ -151,12 +180,26 @@ namespace BlogProjem.Web.Areas.Member.Controllers
                                 return View(dto);
                             }                                                      
                         }
-                        appUser.Password=dto.NewPassword;
-                        appUserRepository.Update(appUser);                       
-                        identityUser.PasswordHash = userManager.PasswordHasher.HashPassword(identityUser,dto.NewPassword);                       
-                        userPasswordRepository.Create(new UserPassword { pw = appUser.Password, CreateTime = DateTime.Now, AppUserId = appUser.ID, AppUser = appUser });
-                        await signInManager.SignOutAsync();
-                        return Redirect("~/");
+                        IdentityResult result = await userManager.ChangePasswordAsync(identityUser,  dto.PW, dto.NewPassword);
+                        if (result.Succeeded)
+                        {
+                            appUser.Password = dto.NewPassword;
+                            appUserRepository.Update(appUser);
+                            userPasswordRepository.Create(new UserPassword { pw = appUser.Password, CreateTime = DateTime.Now, AppUserId = appUser.ID, AppUser = appUser });
+                            await signInManager.SignOutAsync();
+                            return Redirect("~/");
+                        }
+                        //else if (!result.Succeeded)
+                        //{
+                        //    appUser.Password = dto.NewPassword;
+                        //    appUserRepository.Update(appUser);
+                        //    identityUser.PasswordHash = userManager.PasswordHasher.HashPassword(identityUser, dto.NewPassword);
+                        //    userPasswordRepository.Create(new UserPassword { pw = appUser.Password, CreateTime = DateTime.Now, AppUserId = appUser.ID, AppUser = appUser });
+                        //    await signInManager.SignOutAsync();
+                        //    return Redirect("~/");
+
+                        //}
+                       
                     }
                     ModelState.AddModelError("NewPassword",$"new password confirumNewPasswordla uyuşmuyor");
                     return View(dto);
@@ -177,7 +220,7 @@ namespace BlogProjem.Web.Areas.Member.Controllers
                 FirstName=a.FirstName,
                 LastName=a.LastName,
                 ImagePath=a.ImagePath,
-                UserName=a.UserName,                
+                //UserName=a.UserName,                
 
             }, expression: a => a.IdentityId == identityUser.Id);
             return View(UserEditProfil);
@@ -253,6 +296,20 @@ namespace BlogProjem.Web.Areas.Member.Controllers
             Email=identityUser.Email,
             } , expression: a => a.IdentityId == identityUser.Id);
             return View(UserProfil);
+        }
+
+        
+        public async Task< IActionResult> Delete()
+        {
+            IdentityUser ıdentityUser = await userManager.GetUserAsync(User);
+            var appUser = appUserRepository.GetDefault(a => a.IdentityId == ıdentityUser.Id);
+            appUserRepository.Delete(appUser);
+            await signInManager.SignOutAsync();
+            return Redirect("~/");
+        }
+        public IActionResult Abaut()
+        {
+            return View();
         }
 
     }

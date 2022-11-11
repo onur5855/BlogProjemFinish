@@ -10,11 +10,11 @@
 
 
                     <img class="img-circle" style="border-radius:50%;" src="@item.UserImage" alt="User Image">
-                    <span class="username"><a asp-controller="AppUser" asp-action="detail" asp-route-id="@item.UserId">@item.UserFullName</a></span>
+                    <span class="username"><a asp-controller="user" asp-action="detail" asp-route-id="@item.UserId">@item.UserFullName</a></span>
                     <span class="description">Tarafından Paylaşıldı - @item.CreatedDate.ToString("dd MMMM dddd yyyy")</span>
                 </div>
                 <!-- /.user-block -->
-                <div class="card-tools">
+               @* <div class="card-tools">
                     <button type="button" class="btn btn-tool" title="Mark as read">
                         <i class="far fa-circle"></i>
                     </button>
@@ -24,7 +24,7 @@
                     <button type="button" class="btn btn-tool" data-card-widget="remove">
                         <i class="fas fa-times"></i>
                     </button>
-                </div>
+                </div>*@
                 <!-- /.card-tools -->
             </div>
             <!-- /.card-header -->
@@ -33,32 +33,36 @@
                 <p><b>@item.Title</b></p>
 
                 <p>
-
-                    @item.Content
+                     @for (int i = 0; i <item.Content.Split(' ','.',',').Length; i++)
+                    {
+                        @item.Content[i]
+                    }
+                    
 
                 </p>
                 <a asp-controller="Article" asp-action="Detail" asp-route-id="@item.ArticleID">Devamını okumak için tıklayınız !...</a>
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i> Share</button>
-                <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
-                <span class="float-right text-muted">@item.Like.Count() - @item.Comments.Count()</span>
+               @* <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i> Share</button>*@
+             @*   <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>*@
+                <span class="float-right text-muted">Begeni: @item.Like.Count() - Yorum: @item.Comments.Count()</span>
             </div>
             <!-- /.card-body -->
             @if (item.Comments.Count > 0)
             {
-                @foreach (var comment in item.Comments)
+                @foreach (var comment in item.Comments.Take(3))
                 {
                     <div class="card-footer card-comments">
                         <div class="card-comment">
                             <!-- User image -->
-                            <a href=""> <img class="img-circle img-xsm" style="border-radius:50%;" src="@comment.AppUser.ImagePath " alt="User Image"> </a>                            
-                            <div class="comment-text">
+                            <a  asp-controller="user" asp-action="detail" asp-route-id="@comment.AppUserId"> <img class="img-circle img-xsm" style="border-radius:50%;" src="@comment.AppUser.ImagePath" alt="User Image"></a>                            
+                            @*<div class="comment-text">*@
                                 <span class="username">
                                     @comment.Text
-                                    <span class="text-muted float-right">@comment.CreatedDate.ToString()</span>
-                                </span><!-- /.username -->
+                                    <span class="text-muted float-right float-end">@comment.CreatedDate.ToString()</span>
+                                </span>
+                                <!-- /.username -->
                                 @*It is a long established fact that a reader will be distracted
                                 by the readable content of a page when looking at its layout.*@
-                             </div>
+                            @* </div>*@
                             <!-- /.comment-text -->
                         </div>
                         @*<!-- /.card-comment -->
